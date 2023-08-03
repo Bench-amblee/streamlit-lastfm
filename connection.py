@@ -14,16 +14,14 @@ class LastFMConnection(ExperimentalBaseConnection[requests.Session]):
         Returns:
             requests.Session: the requests session object.
         """
-        oauth_url = self._secrets['oauth_url']
-        client_id = self._secrets['client_id']
-        client_secret = self._secrets['client_secret']
-        query_params = {'grant_type': 'client_credentials'}
+        oauth_url = self._secrets['URL']
+        client_id = self._secrets['USER_AGENT']
+        client_secret = self._secrets['API_KEY']
 
         session = requests.Session()
         
         response = session.post(
             url=oauth_url,
-            params=query_params,
             auth=(client_id, client_secret)
         )
         self._access_token = response.json()['access_token']
@@ -59,7 +57,7 @@ class LastFMConnection(ExperimentalBaseConnection[requests.Session]):
             return response
 
         response = _get(url)
-        
+
         if response.status_code == 200:
             time.sleep(0.05)
             return response
