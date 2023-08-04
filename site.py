@@ -37,7 +37,7 @@ def similar_artist(artist_choice,number_input):
     test_df['Artist'] = ra_df['name']
     test_df['Similarity Score'] = ra_df['match']
 
-    return test_df
+    return st.dataframe(data=test_df)
 
 st.image('lastfm.png')
 st.title('Last.FM Similar Artists Generator')
