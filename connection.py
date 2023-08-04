@@ -96,3 +96,27 @@ class LastFMConnector(ExperimentalBaseConnection[requests.Session]):
         img = Image.open(BytesIO(response1.content))
 
         return img
+
+    def get_album_name(artist):
+        global album_name
+        def lastfm_get(payload):
+            # define headers and URL
+            headers = {'user-agent': 'BosHosChos'}
+            url = 'https://ws.audioscrobbler.com/2.0/'
+
+            # Add API key and format to the payload
+            payload['api_key'] = 'd7efefdd2ff6cdec4b1a223857dba69e'
+            payload['format'] = 'json'
+            payload['artist'] = artist
+            payload['limit'] = 4
+
+            response = requests.get(url, headers=headers, params=payload)
+            return response
+        r_image = lastfm_get({'method': 'artist.getTopAlbums'})
+        r_json = r_image.json()
+        r_images = r_json['topalbums']['album']
+        ri_df = pd.DataFrame(r_images)
+        rn = random.randint(0,(len(ri_df)-1))
+        album_name = ri_df['name'][rn]
+
+        return album_name
