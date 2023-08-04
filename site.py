@@ -37,8 +37,6 @@ def similar_artist(artist_choice,number_input):
     test_df['Artist'] = ra_df['name']
     test_df['Similarity Score'] = ra_df['match']
 
-    st.line_chart(test_df, x='Artist',y='Similarity Score')
-
     return test_df
 
 st.image('lastfm.png')
@@ -53,7 +51,7 @@ if artist_input == 'Custom':
   custom = st.text_input('Choose a musical artist (Case Sensitive)')
   artist_input = custom
 
-similar_count = st.slider('How many similar artists would you like?',1,10)
+similar_count = st.slider('How many similar artists would you like?',1,30)
 
 if artist_input == '':
     st.write('Please select an artist')
