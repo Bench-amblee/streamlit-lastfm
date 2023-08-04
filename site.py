@@ -8,6 +8,7 @@ import json
 import requests
 
 def similar_artist(artist_choice,number_input):
+    global test_df
     def lastfm_get(payload):
         # define headers and URL
         headers = {'user-agent': 'BosHosChos'}
