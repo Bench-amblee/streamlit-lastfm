@@ -15,7 +15,6 @@ artist_input = st.selectbox('Select An Artist', examples, index=0)
 
 if artist_input == 'Custom':
   custom = st.text_input('Choose a musical artist (Case Sensitive)')
-  artist_input = custom
 
 similar_count = st.slider('How many similar artists would you like?',1,5)
 
@@ -48,7 +47,9 @@ def similar_artist(artist_choice,number_input):
     
     print('Artists Similar to ' + artist_choice)
     for i in range(int(number_input)):
-        artist = similar_artists_list[i]
+        st.write(artist = similar_artists_list[i])
+
+
 
 similar_artist(artist_input,similar_count)
 
