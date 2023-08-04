@@ -95,4 +95,4 @@ class LastFMConnector(ExperimentalBaseConnection[requests.Session]):
         response1 = requests.get(album_cover)
         img = Image.open(BytesIO(response1.content))
 
-        return st.image(img)
+        return img
