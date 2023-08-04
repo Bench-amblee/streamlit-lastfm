@@ -60,8 +60,8 @@ def get_album_cover(artist):
     r_images = r_json['topalbums']['album']
     ri_df = pd.DataFrame(r_images)
     rn = random.randint(0,(len(ri_df)-1))
-    album_name = ri_df['name'][x]
-    album_cover = ri_df['image'][x][3]
+    album_name = ri_df['name'][rn]
+    album_cover = ri_df['image'][rn][3]
 
     response1 = requests.get(album_cover)
     img = Image.open(BytesIO(response1.content))
