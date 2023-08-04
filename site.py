@@ -5,3 +5,5 @@ import pandas as pd
 st.title('Last.FM Similar Artists Generator')
 connection = LastFMConnector() 
 
+connection
+
