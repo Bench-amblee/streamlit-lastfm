@@ -37,9 +37,7 @@ def similar_artist(artist_choice,number_input):
     test_df['Artist'] = ra_df['name']
     test_df['Similarity Score'] = ra_df['match']
 
-    x = list(test_df['Artist'])
-    y = list(test_df['Similarity Score'])
-    st.bar_chart(x=x,y=y)
+    st.bar_chart(test_df)
 
     return test_df
 
