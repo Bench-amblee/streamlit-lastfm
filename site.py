@@ -44,12 +44,7 @@ def similar_artist(artist_choice,number_input):
     similar_artists_list = ra_df['name']
     url = ra_df['url']
     score = ra_df['match']
-    
-    print('Artists Similar to ' + artist_choice)
-    for i in range(int(number_input)):
-        st.write(artist = similar_artists_list[i])
-    
-  return similar_artists_list
+    return similar_artists_list
 
 
 
