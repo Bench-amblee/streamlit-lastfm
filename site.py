@@ -49,7 +49,7 @@ if artist_input == 'Custom':
 
 similar_count = st.slider('How many similar artists would you like?',1,5)
 
-similar_artists(artist_input,similar_count)
+similar_artist(artist_input,similar_count)
 
 
 
