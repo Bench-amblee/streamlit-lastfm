@@ -32,8 +32,12 @@ def similar_artist(artist_choice,number_input):
     similar_artists_list = ra_df['name']
     url = ra_df['url']
     score = ra_df['match']
+
+    test_df = pd.DataFrame()
+    test_df['Arist' = ra_df['name']
+    test_df['Similarity Score'] = ra_df['score']
   
-    return similar_artists_list
+    return test_df
 
 st.title('Last.FM Similar Artists Generator')
 connection = LastFMConnector() 
@@ -51,8 +55,8 @@ if artist_input == '':
 st.write('Please select an artist')
 else:
 
-    list = similar_artist(artist_input,similar_count)
-    st.write(list)
+    test_response = similar_artist(artist_input,similar_count)
+    st.write(test_response)
 
 
 
