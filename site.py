@@ -8,6 +8,7 @@ import json
 import requests
 import random
 
+'''
 def similar_artist(artist_choice,number_input):
     global test_df
     def lastfm_get(payload):
@@ -68,6 +69,7 @@ def get_album_cover(artist):
     img = Image.open(BytesIO(response1.content))
 
     return st.image(img)
+'''
     
 
 
