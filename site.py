@@ -39,7 +39,7 @@ def similar_artist(artist_choice,number_input):
 
     return test_df
 
-
+st.image('lastfm.png')
 st.title('Last.FM Similar Artists Generator')
 connection = LastFMConnector() 
 
