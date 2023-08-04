@@ -61,7 +61,8 @@ else:
     st.write(test_response)
 
 st.write('Of the suggested Artists, pick one and the app will recommend one of their albums')
-similar_input = st.selectbox('Select a Similar Artist',list(test_df['Artist'],index=0))
+st.write(test_df)
+#similar_input = st.selectbox('Select a Similar Artist',list(test_df['Artist'],index=0))
 
 
   
