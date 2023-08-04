@@ -37,8 +37,8 @@ def similar_artist(artist_choice,number_input):
     test_df['Artist'] = ra_df['name']
     test_df['Similarity Score'] = ra_df['match']
 
-    x = test_df['Artist']
-    y = test_df['Similarity Score']
+    x = list(test_df['Artist'])
+    y = list(test_df['Similarity Score'])
     st.scatter(x,y)
 
     return test_df
