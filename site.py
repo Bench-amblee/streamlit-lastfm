@@ -1,6 +1,12 @@
 import streamlit as st
 from connection import LastFMConnector
 import pandas as pd
+import matplotlib.pyplot as plt
+from PIL import Image
+import requests
+from io import BytesIO
+import json
+import requests
 
 st.title('Last.FM Similar Artists Generator')
 connection = LastFMConnector() 
@@ -12,7 +18,40 @@ if artist_input == 'Custom':
   custom = st.text_input('Choose a musical artist (Case Sensitive)')
   artist_input = custom
 
-similar_artists = st.slider('How many similar artists would you like?',1,5)
+similar_count = st.slider('How many similar artists would you like?',1,5)
+
+def similar_artist(artist_choice,number_input):
+    
+    def lastfm_get(payload):
+        # define headers and URL
+        headers = {'user-agent': 'BosHosChos'}
+        url = 'https://ws.audioscrobbler.com/2.0/'
+
+        # Add API key and format to the payload
+        payload['api_key'] = 'd7efefdd2ff6cdec4b1a223857dba69e'
+        payload['format'] = 'json'
+        payload['artist'] = artist_choice
+        payload['limit'] = int(number_input)
+
+        response = requests.get(url, headers=headers, params=payload)
+        return response
+
+
+    r = lastfm_get({
+    'method': 'artist.getSimilar'})
+
+    r_json = r.json()
+    r_artists = r_json['similarartists']['artist']
+    ra_df = pd.DataFrame(r_artists)
+    similar_artists_list = ra_df['name']
+    url = ra_df['url']
+    score = ra_df['match']
+    
+    print('Artists Similar to ' + artist_choice)
+    for i in range(int(number_input)):
+        artist = similar_artists_list[i]
+
+similar_artist(artist_input,similar_count)
 
 
 
