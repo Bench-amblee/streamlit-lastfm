@@ -6,6 +6,7 @@ import requests
 from io import BytesIO
 import json
 import requests
+import random
 
 def similar_artist(artist_choice,number_input):
     global test_df
@@ -40,6 +41,35 @@ def similar_artist(artist_choice,number_input):
 
     return test_df
 
+def get_album_cover(artist):
+    def lastfm_get(payload):
+        # define headers and URL
+        headers = {'user-agent': 'BosHosChos'}
+        url = 'https://ws.audioscrobbler.com/2.0/'
+
+        # Add API key and format to the payload
+        payload['api_key'] = 'd7efefdd2ff6cdec4b1a223857dba69e'
+        payload['format'] = 'json'
+        payload['artist'] = artist
+        payload['limit'] = 4
+
+        response = requests.get(url, headers=headers, params=payload)
+        return response
+    r_image = lastfm_get({'method': 'artist.getTopAlbums'})
+    r_json = r_image.json()
+    r_images = r_json['topalbums']['album']
+    ri_df = pd.DataFrame(r_images)
+    rn = random.randint(0,(len(ri_df)-1))
+    album_name = ri_df['name'][x]
+    album_cover = ri_df['image'][x][3]
+
+    response1 = requests.get(album_cover)
+    img = Image.open(BytesIO(response1.content))
+
+    return st.image(img)
+    
+
+
 st.image('lastfm.png')
 st.title('Last.FM Similar Artists Generator')
 st.write("Pick a musical artist you like and this app will recommend a similar artist based on Last.fm's algorithm.")
@@ -63,6 +93,7 @@ else:
 
 st.write('Of the suggested Artists, pick one and the app will recommend one of their albums')
 similar_input = st.selectbox('Select a Similar Artist',list(test_df['Artist']),index=0)
+get_album_cover(similar_input)
 
 
   
