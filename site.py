@@ -97,6 +97,7 @@ else:
     similar_input = st.selectbox('Select a Similar Artist',list(test_response['Artist']),index=0)
     test_image = LastFMConnector.get_album_cover(similar_input)
     st.image(test_image)
+    album_name = LastFMConnector.get_album_name(similar_input)
     final_response = ('If you like ' + artist_input + ', you should check out the album ' + album_name + ' by ' + similar_input)
     st.write(final_response)
 
