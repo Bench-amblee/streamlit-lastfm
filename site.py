@@ -41,6 +41,7 @@ def similar_artist(artist_choice,number_input):
 
 st.image('lastfm.png')
 st.title('Last.FM Similar Artists Generator')
+st.write("Pick a musical artist you like and this app will recommend a similar artist based on Last.fm's algorithm.")
 connection = LastFMConnector() 
 
 examples = ['Taylor Swift','Radiohead', 'Daft Punk', 'Weezer', 'Porter Robinson', 'The Weeknd', 'Kali Uchis', 'Custom']
