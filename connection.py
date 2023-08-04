@@ -16,7 +16,7 @@ class LastFMConnector(ExperimentalBaseConnection[requests.Session]):
     
     def randon_query(self):
         cache_data(ttl=0)
-        def getCats():
+        def getmusic():
             url = 'https://ws.audioscrobbler.com/2.0/'
             print(f"URL is {url}")
             response = self._resource.get(url)
@@ -24,10 +24,10 @@ class LastFMConnector(ExperimentalBaseConnection[requests.Session]):
                 return response.content
             else:
                 raise Exception(f"Failed to fetch.")
-        return getCats()
+        return getmusic()
     
     def query(self, tag = None, gif=False, says = None, ttl: int = 10):
         @cache_data(ttl=ttl)
         def getUrl(url):
             url = 'https://ws.audioscrobbler.com/2.0/'
-        return getCats(url)
+        return getmusic(url)
