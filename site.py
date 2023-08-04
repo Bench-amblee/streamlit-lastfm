@@ -49,7 +49,7 @@ if artist_input == 'Custom':
   custom = st.text_input('Choose a musical artist (Case Sensitive)')
   artist_input = custom
 
-similar_count = st.slider('How many similar artists would you like?',1,5)
+similar_count = st.slider('How many similar artists would you like?',1,10)
 
 if artist_input == '':
     st.write('Please select an artist')
