@@ -49,6 +49,8 @@ def similar_artist(artist_choice,number_input):
     for i in range(int(number_input)):
         st.write(artist = similar_artists_list[i])
 
+  return similar_artists_list
+
 
 
 similar_artist(artist_input,similar_count)
