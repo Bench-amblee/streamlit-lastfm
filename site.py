@@ -39,7 +39,7 @@ def similar_artist(artist_choice,number_input):
 
     x = list(test_df['Artist'])
     y = list(test_df['Similarity Score'])
-    st.plot(x,y)
+    st.bar_chart(x=x,y=y)
 
     return test_df
 
