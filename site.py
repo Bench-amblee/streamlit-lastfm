@@ -8,7 +8,7 @@ import json
 import requests
 import random
 
-'''
+blank = '''
 def similar_artist(artist_choice,number_input):
     global test_df
     def lastfm_get(payload):
@@ -91,11 +91,11 @@ if artist_input == '':
     st.write('Please select an artist')
 else:
 
-    test_response = similar_artist(artist_input,similar_count)
+    test_response = LastFMConnector.similar_artist(artist_input,similar_count)
     st.write(test_response)
     st.write('Of the suggested Artists, pick one and the app will recommend one of their albums')
     similar_input = st.selectbox('Select a Similar Artist',list(test_df['Artist']),index=0)
-    get_album_cover(similar_input)
+    LastFMConnector.get_album_cover(similar_input)
     final_response = ('If you like ' + artist_input + ', you should check out the album ' + album_name + ' by ' + similar_input)
     st.write(final_response)
 
