@@ -7,18 +7,6 @@ from io import BytesIO
 import json
 import requests
 
-st.title('Last.FM Similar Artists Generator')
-connection = LastFMConnector() 
-
-examples = ['Taylor Swift','Radiohead', 'Daft Punk', 'Weezer', 'Porter Robinson', 'The Weeknd', 'Kali Uchis', 'Custom']
-artist_input = st.selectbox('Select An Artist', examples, index=0)
-
-if artist_input == 'Custom':
-  custom = st.text_input('Choose a musical artist (Case Sensitive)')
-  artist_input = custom
-
-similar_count = st.slider('How many similar artists would you like?',1,5)
-
 def similar_artist(artist_choice,number_input):
     
     def lastfm_get(payload):
@@ -49,7 +37,19 @@ def similar_artist(artist_choice,number_input):
     return similar_artists_list
     return st.write('yes')
 
-similar_artist(artist_input,similar_count)
+st.title('Last.FM Similar Artists Generator')
+connection = LastFMConnector() 
+
+examples = ['Taylor Swift','Radiohead', 'Daft Punk', 'Weezer', 'Porter Robinson', 'The Weeknd', 'Kali Uchis', 'Custom']
+artist_input = st.selectbox('Select An Artist', examples, index=0)
+
+if artist_input == 'Custom':
+  custom = st.text_input('Choose a musical artist (Case Sensitive)')
+  artist_input = custom
+
+similar_count = st.slider('How many similar artists would you like?',1,5)
+
+similar_artists(artist_input,similar_count)
 
 
 
