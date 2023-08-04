@@ -71,6 +71,7 @@ class LastFMConnector(ExperimentalBaseConnection[requests.Session]):
 
     def get_album_cover(artist):
         global album_name
+        global rn
         def lastfm_get(payload):
             # define headers and URL
             headers = {'user-agent': 'BosHosChos'}
@@ -116,7 +117,6 @@ class LastFMConnector(ExperimentalBaseConnection[requests.Session]):
         r_json = r_image.json()
         r_images = r_json['topalbums']['album']
         ri_df = pd.DataFrame(r_images)
-        rn = random.randint(0,(len(ri_df)-1))
         album_name = ri_df['name'][rn]
 
         return album_name
