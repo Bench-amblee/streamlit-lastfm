@@ -42,6 +42,7 @@ def similar_artist(artist_choice,number_input):
     return test_df
 
 def get_album_cover(artist):
+    global album_name
     def lastfm_get(payload):
         # define headers and URL
         headers = {'user-agent': 'BosHosChos'}
@@ -94,6 +95,8 @@ else:
 st.write('Of the suggested Artists, pick one and the app will recommend one of their albums')
 similar_input = st.selectbox('Select a Similar Artist',list(test_df['Artist']),index=0)
 get_album_cover(similar_input)
+final_response = 'If you like ' + artist_input + ', you should check out the album ' + album_name + ' by ' + similar input
+st.write(final_response)
 
 
   
