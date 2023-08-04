@@ -1,7 +1,6 @@
 import streamlit as st
 from connection import LastFMConnector
 import pandas as pd
-import matplotlib.pyplot as plt
 from PIL import Image
 import requests
 from io import BytesIO
