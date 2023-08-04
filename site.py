@@ -34,7 +34,7 @@ def similar_artist(artist_choice,number_input):
     score = ra_df['match']
 
     test_df = pd.DataFrame()
-    test_df['Arist'] = ra_df['name']
+    test_df['Artist'] = ra_df['name']
     test_df['Similarity Score'] = ra_df['match']
 
     x = test_df['Artist']
