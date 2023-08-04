@@ -72,7 +72,7 @@ def get_album_cover(artist):
 
 
 st.image('lastfm.png')
-st.title('Last.FM Similar Artists Generator')
+st.title('Last.fm Similar Artists Generator')
 st.write("Pick a musical artist you like and this app will recommend a similar artist based on Last.fm's algorithm.")
 connection = LastFMConnector() 
 
