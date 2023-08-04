@@ -47,8 +47,12 @@ if artist_input == 'Custom':
 
 similar_count = st.slider('How many similar artists would you like?',1,5)
 
-list = similar_artist(artist_input,similar_count)
-st.write(list)
+if artist_input = '':
+st.write('Please select an artist')
+else:
+
+    list = similar_artist(artist_input,similar_count)
+    st.write(list)
 
 
 
