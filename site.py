@@ -8,7 +8,6 @@ import json
 import requests
 
 def similar_artist(artist_choice,number_input):
-    st.write('it worked')
     def lastfm_get(payload):
         # define headers and URL
         headers = {'user-agent': 'BosHosChos'}
@@ -48,7 +47,8 @@ if artist_input == 'Custom':
 
 similar_count = st.slider('How many similar artists would you like?',1,5)
 
-similar_artist(artist_input,similar_count)
+list = similar_artist(artist_input,similar_count)
+st.write(list)
 
 
 
