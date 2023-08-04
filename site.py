@@ -8,7 +8,7 @@ import json
 import requests
 
 def similar_artist(artist_choice,number_input):
-    
+    st.write('it worked')
     def lastfm_get(payload):
         # define headers and URL
         headers = {'user-agent': 'BosHosChos'}
@@ -35,7 +35,6 @@ def similar_artist(artist_choice,number_input):
     score = ra_df['match']
   
     return similar_artists_list
-    return st.write('yes')
 
 st.title('Last.FM Similar Artists Generator')
 connection = LastFMConnector() 
