@@ -1,5 +1,11 @@
 import streamlit as st
+import openai
+from dotenv import load_dotenv
+import os
 from connection import LastFMConnector
+
+load_dotenv()
+key = os.getenv("OPENAI_API_KEY")
 
 tab1, tab2 = st.tabs(["'Find Similar Artists", 'Album Recommendation'])
 
