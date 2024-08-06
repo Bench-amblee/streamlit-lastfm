@@ -2,7 +2,7 @@ import streamlit as st
 from openai import OpenAI
 from connection import LastFMConnector
 
-key=st.secrets['openai']['KEY']
+key = st.secrets['openai']['KEY']
 
 def suggest_album(prompt_input):
    client = OpenAI(api_key=key)
@@ -53,9 +53,15 @@ with tab1:
 with tab2:
    
    st.header("Album Recommendations")
-   user_input = st.text_input("Enter an album or artists you like:")
-   if user_input:
-      prompt_input = f"Recommend an album that sounds like {user_input}."
-      suggestion = suggest_album(prompt_input)
-      st.write(f'Album recommendation: {suggestion}')
-  
+
+   if "messages" not in st.session_state:
+    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+   for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
+    client = OpenAI(api_key=key)
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
+    response = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
+    msg = response.choices[0].message.content
+    st.session_state.messages.append({"role": "assistant", "content": msg})
+    st.chat_message("assistant").write(msg)
