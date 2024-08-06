@@ -1,5 +1,5 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 from dotenv import load_dotenv
 import os
 from connection import LastFMConnector
@@ -8,12 +8,16 @@ load_dotenv()
 key = os.getenv("OPENAI_API_KEY")
 
 def suggest_album(prompt_input):
-   response = openai.Completion.create(
-      engine='text-davinci-003',
-      prompt=prompt_input,
-      max_tokens=50
+   client - OpenAI(api_key=key)
+
+   completion = client.chat.completions.create(
+      model="gpt-4o-mini",
+      messages=[
+         {"role": "system", "content": "You are a helpful assistant."},
+         {"role": "user", "content": prompt_input}
+      ]
    )
-   return response.choices[0].text.strip()
+   return completion.choices[0].message.content
 
 tab1, tab2 = st.tabs(["'Find Similar Artists", 'Album Recommendation'])
 
@@ -56,4 +60,4 @@ with tab2:
       suggestion = suggest_album(prompt_input)
       st.write(f'Album recommendation: {suggestion}')
   
-  
+
