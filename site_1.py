@@ -57,7 +57,7 @@ tab1, tab2 = st.tabs(["Find Similar Artists", 'Album Recommendation'])
 with tab1:
 
   st.title(':musical_keyboard: Find Similar Artists')
-  st.write("Created by Ben Chamblee [Github](https://github.com/Bench-amblee/") 
+  st.write("Created by Ben Chamblee [Github](https://github.com/Bench-amblee/)") 
   st.write("Pick a musical artist you like and this app will recommend a similar artist based on Last.fm's algorithm.")
   connection = LastFMConnector() 
 
@@ -92,7 +92,7 @@ with tab1:
 
 with tab2:
    st.title (':cd: Find an Album')
-   st.write("Created by Ben Chamblee [Github](https://github.com/Bench-amblee/")
+   st.write("Created by Ben Chamblee [Github](https://github.com/Bench-amblee/)")
    st.write ('Use the input below to search for an album - you can search for albums in any way, no matter how obscure the prompt is you will get an album in return!')
 
    st.write("Find an album that....")
