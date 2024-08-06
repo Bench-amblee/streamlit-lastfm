@@ -7,18 +7,8 @@ import pandas as pd
 import ast
 from io import BytesIO
 
-key = st.secrets['openai']['KEY']
 
-#def suggest_album(prompt_input):
-   #response = openai.Completion.create(
-      #model = 'text-davinci-003',
-      #prompt=prompt_input,
-      #max_tokens = 50
-   #)
-   
-   
-   #return response.choices[0].text
-#openai.api_key = os.getenv("OPENAI_API_KEY")
+key = st.secrets['openai']['KEY']
 
 def get_openai_response(api_key,messages):
    client = OpenAI(api_key=api_key)
@@ -30,34 +20,34 @@ def get_openai_response(api_key,messages):
    return response.choices[0].message.content
 
 def get_album_cover(album,artist):
-        global album_name
-        global rn
-        def lastfm_get(payload):
-            # define headers and URL
-            headers = {'user-agent': 'BosHosChos'}
-            url = 'https://ws.audioscrobbler.com/2.0/'
+   global album_name
+   global rn
+   def lastfm_get(payload):
+      # define headers and URL
+      headers = {'user-agent': 'BosHosChos'}
+      url = 'https://ws.audioscrobbler.com/2.0/'
 
-            # Add API key and format to the payload
-            payload['api_key'] = 'd7efefdd2ff6cdec4b1a223857dba69e'
-            payload['format'] = 'json'
-            payload['artist'] = artist
-            payload['limit'] = 50
+      # Add API key and format to the payload
+      payload['api_key'] = 'd7efefdd2ff6cdec4b1a223857dba69e'
+      payload['format'] = 'json'
+      payload['artist'] = artist
+      payload['limit'] = 50
 
-            response = requests.get(url, headers=headers, params=payload)
-            return response
-        r_image = lastfm_get({'method': 'artist.getTopAlbums'})
-        r_json = r_image.json()
-        r_images = r_json['topalbums']['album']
-        ri_df = pd.DataFrame(r_images)
+      response = requests.get(url, headers=headers, params=payload)
+      return response
+   r_image = lastfm_get({'method': 'artist.getTopAlbums'})
+   r_json = r_image.json()
+   r_images = r_json['topalbums']['album']
+   ri_df = pd.DataFrame(r_images)
         
-        alb_df = ri_df[ri_df['name']==album]
-        #album_name = ri_df['name'][rn]
-        album_cover = alb_df['image'][0][3]["#text"]
+   alb_df = ri_df[ri_df['name']==album]
+   #album_name = ri_df['name'][rn]
+   album_cover = alb_df['image'][0][3]["#text"]
 
-        response1 = requests.get(album_cover)
-        img = Image.open(BytesIO(response1.content))
+   response1 = requests.get(album_cover)
+   img = Image.open(BytesIO(response1.content))
 
-        return img
+   return img
 
 tab1, tab2 = st.tabs(["'Find Similar Artists", 'Album Recommendation'])
 
