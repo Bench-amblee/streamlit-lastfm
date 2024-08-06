@@ -51,37 +51,43 @@ def get_album_cover(album,artist):
          img = Image.open(BytesIO(response1.content))
          return img
 
-tab1, tab2 = st.tabs(["'Find Similar Artists", 'Album Recommendation'])
+
+tab1, tab2 = st.tabs(["Find Similar Artists", 'Album Recommendation'])
 
 with tab1:
-   
-  st.image('lastfm.png')
-  st.title('Last.fm Similar Artists Generator')
+
+  st.title(':musical_keyboard: Find Similar Artists')
   st.write("Pick a musical artist you like and this app will recommend a similar artist based on Last.fm's algorithm.")
   connection = LastFMConnector() 
 
-  examples = ['Taylor Swift','Radiohead', 'Daft Punk', 'Weezer', 'Porter Robinson', 'The Weeknd', 'Kali Uchis', 'Custom']
+  examples = ['No Selection','Taylor Swift','Radiohead', 'Daft Punk', 'Weezer', 'Porter Robinson', 'The Weeknd', 'Kali Uchis', 'Custom']
   artist_input = st.selectbox('Select An Artist', examples, index=0)
 
-  if artist_input == 'Custom':
-    custom = st.text_input('Choose a musical artist (Case Sensitive)')
-    artist_input = custom
+  if artist_input != 'No Selection':
 
-  similar_count = st.slider('How many similar artists would you like?',1,30)
+   if artist_input == 'Custom':
+      custom = st.text_input('Choose a musical artist (Case Sensitive)')
+      artist_input = custom
 
-  if artist_input == '':
-      st.write('Please select an artist')
-  else:
+   similar_count = st.slider('How many similar artists would you like?',1,30)
+
+   if artist_input == '':
+         st.write('Please select an artist')
+   else:
 
       test_response = LastFMConnector.similar_artist(artist_input,similar_count)
       st.write(test_response)
       st.write('Of the suggested Artists, pick one and the app will recommend one of their albums')
-      similar_input = st.selectbox('Select a Similar Artist',list(test_response['Artist']),index=0)
-      test_image = LastFMConnector.get_album_cover(similar_input)
-      st.image(test_image)
-      album_name = LastFMConnector.get_album_name(similar_input)
-      final_response = ('If you like ' + artist_input + ', you should check out the album ' + album_name + ' by ' + similar_input)
-      st.write(final_response)
+
+      similar_list = list(test_response['Artist'])
+      similar_list.insert(0,'No Selection')
+      similar_input = st.selectbox('Select a Similar Artist',similar_list,index=0)
+      if similar_input != 'No Selection':
+         test_image = LastFMConnector.get_album_cover(similar_input)
+         st.image(test_image)
+         album_name = LastFMConnector.get_album_name(similar_input)
+         final_response = ('If you like ' + artist_input + ', you should check out the album ' + album_name + ' by ' + similar_input)
+         st.write(final_response)
 
 with tab2:
    st.title (':cd: Find an Album')
