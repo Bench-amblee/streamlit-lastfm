@@ -1,5 +1,19 @@
 import streamlit as st
+import openai
+from dotenv import load_dotenv
+import os
 from connection import LastFMConnector
+
+load_dotenv()
+key = os.getenv("OPENAI_API_KEY")
+
+def suggest_album(prompt_input):
+   response = openai.Completion.create(
+      engine='text-davinci-003',
+      prompt=prompt_input,
+      max_tokens=50
+   )
+   return response.choices[0].text.strip()
 
 tab1, tab2 = st.tabs(["'Find Similar Artists", 'Album Recommendation'])
 
@@ -38,5 +52,6 @@ with tab2:
    st.header("Album Recommendations")
    user_input = st.text_input("Enter an album or artists you like:")
    if user_input:
-      # openAI call
-      st.write("Donezo")
+      prompt_input = f"Recommend an album that sounds like {user_input}."
+      suggestion = suggest_album(prompt_input)
+      st.write(f'Album recommendation: {suggestion}')
