@@ -7,6 +7,8 @@ from io import BytesIO
 import random
 from streamlit.connections import ExperimentalBaseConnection
 from streamlit.runtime.caching import cache_data
+import openai
+import python-dotenv
 
 
 class LastFMConnector(ExperimentalBaseConnection[requests.Session]):
