@@ -41,9 +41,10 @@ def get_album_cover(album,artist):
    ri_df = pd.DataFrame(r_images)
         
    alb_df = ri_df[ri_df['name']==album]
-   #album_name = ri_df['name'][rn]
-   album_cover = alb_df['image'][3]["#text"]
 
+   alb_df = alb_df.reset_index(drop=True)
+
+   album_cover = alb_df['image'][0][3]["#text"]
    response1 = requests.get(album_cover)
    img = Image.open(BytesIO(response1.content))
 
