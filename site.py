@@ -1,6 +1,8 @@
 import streamlit as st
 from connection import LastFMConnector
 
+
+
 st.image('lastfm.png')
 st.title('Last.fm Similar Artists Generator')
 st.write("Pick a musical artist you like and this app will recommend a similar artist based on Last.fm's algorithm.")
@@ -29,7 +31,4 @@ else:
     final_response = ('If you like ' + artist_input + ', you should check out the album ' + album_name + ' by ' + similar_input)
     st.write(final_response)
 
-
-
-  
 
