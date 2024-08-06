@@ -1,22 +1,63 @@
 import streamlit as st
 from openai import OpenAI
 from connection import LastFMConnector
+import requests
+from PIL import Image
+import pandas as pd 
+import ast
+from io import BytesIO
 
 key = st.secrets['openai']['KEY']
 
-def suggest_album(prompt_input):
-   client = OpenAI(api_key=key)
+#def suggest_album(prompt_input):
+   #response = openai.Completion.create(
+      #model = 'text-davinci-003',
+      #prompt=prompt_input,
+      #max_tokens = 50
+   #)
+   
+   
+   #return response.choices[0].text
+#openai.api_key = os.getenv("OPENAI_API_KEY")
 
-   completion = client.chat.completions.create(
-      model="gpt-4o-mini",
-      messages=[
-         {"role": "system", "content": "You are a helpful assistant."},
-         {"role": "user", "content": prompt_input}
-      ],
-      max_tokens=50
+def get_openai_response(api_key,messages):
+   client = OpenAI(api_key=api_key)
+   response = client.chat.completions.create(
+      model="gpt-3.5-turbo",
+      temperature=1,
+      messages=messages
    )
-   return completion.choices[0].message.content
+   return response.choices[0].message.content
 
+def get_album_cover(album,artist):
+        global album_name
+        global rn
+        def lastfm_get(payload):
+            # define headers and URL
+            headers = {'user-agent': 'BosHosChos'}
+            url = 'https://ws.audioscrobbler.com/2.0/'
+
+            # Add API key and format to the payload
+            payload['api_key'] = 'd7efefdd2ff6cdec4b1a223857dba69e'
+            payload['format'] = 'json'
+            payload['artist'] = artist
+            payload['limit'] = 50
+
+            response = requests.get(url, headers=headers, params=payload)
+            return response
+        r_image = lastfm_get({'method': 'artist.getTopAlbums'})
+        r_json = r_image.json()
+        r_images = r_json['topalbums']['album']
+        ri_df = pd.DataFrame(r_images)
+        
+        alb_df = ri_df[ri_df['name']==album]
+        #album_name = ri_df['name'][rn]
+        album_cover = alb_df['image'][0][3]["#text"]
+
+        response1 = requests.get(album_cover)
+        img = Image.open(BytesIO(response1.content))
+
+        return img
 
 tab1, tab2 = st.tabs(["'Find Similar Artists", 'Album Recommendation'])
 
@@ -51,17 +92,27 @@ with tab1:
       st.write(final_response)
 
 with tab2:
-   
-   st.header("Album Recommendations")
+   st.title ('Find an Album')
+   st.write ('Use the input below to search for an album - you can search for albums in any way, no matter how obscure the prompt is you will get an album in return!')
 
-   if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
-   for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
-    client = OpenAI(api_key=key)
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
-    response = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
-    msg = response.choices[0].message.content
-    st.session_state.messages.append({"role": "assistant", "content": msg})
-    st.chat_message("assistant").write(msg)
+   st.write("Find an album that....")
+   options = ['sounds like ', 'feels like  ', 'reminds me of ', 'makes me want to ', 'makes me feel']
+   question = st.selectbox('Select',options, index=0)
+   
+   user_message = st.text_input("")
+   if user_message:
+      full_message = "Find an album that " + question + ' ' + user_message
+      st.write(full_message)
+      if st.button("Send"):
+         if user_message:
+            messages = [
+                  {"role": "system", "content": 'Hello you are a music expert and are tasked with providing people album recommendations based on obscure questions like “give me an album that sounds like how lemons taste”. You must provide them with one album based on their question, no matter how obscure in the form of ["Album Name","Artist Name"]. '},
+                  {"role": "user", "content": full_message}
+               ]
+
+            response_content = get_openai_response(key, messages)
+            album_artist_list = ast.literal_eval(response_content)
+
+            output = 'listen to ' + album_artist_list[0] + ' by ' + album_artist_list[1]
+            st.write(output)
+            st.image(get_album_cover(album_artist_list[0],album_artist_list[1]))
