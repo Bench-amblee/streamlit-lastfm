@@ -44,11 +44,12 @@ def get_album_cover(album,artist):
 
    alb_df = alb_df.reset_index(drop=True)
 
-   if len(alb_df) > 0:
-      album_cover = alb_df['image'][0][3]["#text"]
-      response1 = requests.get(album_cover)
-      img = Image.open(BytesIO(response1.content))
-      return img
+   if alb_df is not None:
+      if len(alb_df) > 0:
+         album_cover = alb_df['image'][0][3]["#text"]
+         response1 = requests.get(album_cover)
+         img = Image.open(BytesIO(response1.content))
+         return img
 
 tab1, tab2 = st.tabs(["'Find Similar Artists", 'Album Recommendation'])
 
