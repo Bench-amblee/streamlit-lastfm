@@ -93,7 +93,7 @@ with tab2:
    user_message = st.text_input("")
    if user_message:
       full_message = "Find an album that " + question + ' ' + user_message
-      #st.write(full_message)
+      st.write(full_message)
       if st.button("Send"):
          if user_message:
             messages = [
