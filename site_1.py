@@ -44,11 +44,11 @@ def get_album_cover(album,artist):
 
    alb_df = alb_df.reset_index(drop=True)
 
-   album_cover = alb_df['image'][0][3]["#text"]
-   response1 = requests.get(album_cover)
-   img = Image.open(BytesIO(response1.content))
-
-   return img
+   if len(alb_df) > 0:
+      album_cover = alb_df['image'][0][3]["#text"]
+      response1 = requests.get(album_cover)
+      img = Image.open(BytesIO(response1.content))
+      return img
 
 tab1, tab2 = st.tabs(["'Find Similar Artists", 'Album Recommendation'])
 
@@ -93,7 +93,6 @@ with tab2:
    user_message = st.text_input("")
    if user_message:
       full_message = "Find an album that " + question + ' ' + user_message
-      st.write(full_message)
       if st.button("Send"):
          if user_message:
             messages = [
@@ -103,9 +102,6 @@ with tab2:
 
             response_content = get_openai_response(key, messages)
             album_artist_list = ast.literal_eval(response_content)
-
-            #output = 'listen to ' + album_artist_list[0] + ' by ' + album_artist_list[1]
-            #st.write(output)
             
             final_statement = 'If you want an album that ' + question + ' ' + user_message + ' you should listen to ' + album_artist_list[0] + ' by ' + album_artist_list[1]
             st.write(final_statement)
