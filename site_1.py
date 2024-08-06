@@ -8,7 +8,7 @@ load_dotenv()
 key = os.getenv("OPENAI_API_KEY")
 
 def suggest_album(prompt_input):
-   client - OpenAI(api_key=key)
+   client = OpenAI(api_key=key)
 
    completion = client.chat.completions.create(
       model="gpt-4o-mini",
