@@ -12,7 +12,7 @@ def suggest_album(prompt_input):
       messages=[
          {"role": "system", "content": "You are a helpful assistant."},
          {"role": "user", "content": prompt_input}
-      ]
+      ],
       max_tokens=50
    )
    return completion.choices[0].message.content
