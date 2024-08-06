@@ -84,7 +84,7 @@ with tab1:
       st.write(final_response)
 
 with tab2:
-   st.title ('Find an Album')
+   st.title (':cd: Find an Album')
    st.write ('Use the input below to search for an album - you can search for albums in any way, no matter how obscure the prompt is you will get an album in return!')
 
    st.write("Find an album that....")
@@ -104,6 +104,11 @@ with tab2:
             response_content = get_openai_response(key, messages)
             album_artist_list = ast.literal_eval(response_content)
             
-            final_statement = 'If you want an album that ' + question + ' ' + user_message + ' you should listen to ' + album_artist_list[0] + ' by ' + album_artist_list[1]
+            if "me" in question:
+               question_grammar = question.replace("me", "you")
+            else:
+               question_grammar = question
+
+            final_statement = 'If you want an album that ' + question_grammar + ' ' + user_message + ' you should listen to ' + album_artist_list[0] + ' by ' + album_artist_list[1]
             st.write(final_statement)
             st.image(get_album_cover(album_artist_list[0],album_artist_list[1]))
