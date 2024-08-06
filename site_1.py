@@ -1,11 +1,8 @@
 import streamlit as st
 from openai import OpenAI
-from dotenv import load_dotenv
-import os
 from connection import LastFMConnector
 
-load_dotenv()
-key = os.getenv("OPENAI_API_KEY")
+key=st.secrets['openai']['key']
 
 def suggest_album(prompt_input):
    client = OpenAI(api_key=key)
@@ -18,6 +15,7 @@ def suggest_album(prompt_input):
       ]
    )
    return completion.choices[0].message.content
+
 
 tab1, tab2 = st.tabs(["'Find Similar Artists", 'Album Recommendation'])
 
