@@ -105,7 +105,7 @@ with tab2:
             album_artist_list = ast.literal_eval(response_content)
 
             #output = 'listen to ' + album_artist_list[0] + ' by ' + album_artist_list[1]
-            st.write(output)
+            #st.write(output)
             st.image(get_album_cover(album_artist_list[0],album_artist_list[1]))
             final_statement = 'If you want an album that ' + question + ' ' + user_message + ' you should listen to ' + album_artist_list[0] + ' by ' + album_artist_list[1]
             st.write(final_statement)
