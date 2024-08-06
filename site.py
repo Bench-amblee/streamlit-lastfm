@@ -2,7 +2,7 @@ import streamlit as st
 from openai import OpenAI
 from connection import LastFMConnector
 
-key=st.secrets['openai']['key']
+key=st.secrets['openai']['KEY']
 
 def suggest_album(prompt_input):
    client = OpenAI(api_key=key)
